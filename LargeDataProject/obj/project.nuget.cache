@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OuMvCYhXmNM=",
+  "dgSpecHash": "9SavqYLlcdY=",
   "success": true,
-  "projectFilePath": "C:\\dev\\workspace\\LargeDataHandling\\LargeDataProject\\LargeDataProject.csproj",
+  "projectFilePath": "C:\\dev\\workspace\\LargeDataMg\\LargeDataProject\\LargeDataProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Metanet\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\Metanet\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",

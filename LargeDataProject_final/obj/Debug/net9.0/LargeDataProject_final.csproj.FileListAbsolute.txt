@@ -1,0 +1,15 @@
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\bin\Debug\net9.0\LargeDataProject_final.exe
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\bin\Debug\net9.0\LargeDataProject_final.deps.json
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\bin\Debug\net9.0\LargeDataProject_final.runtimeconfig.json
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\bin\Debug\net9.0\LargeDataProject_final.dll
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\bin\Debug\net9.0\LargeDataProject_final.pdb
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.AssemblyInfoInputs.cache
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.AssemblyInfo.cs
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.csproj.CoreCompileInputs.cache
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.sourcelink.json
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.dll
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\refint\LargeDataProject_final.dll
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.pdb
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\LargeDataProject_final.genruntimeconfig.cache
+C:\dev\workspace\LargeDataMg\LargeDataProject_final\obj\Debug\net9.0\ref\LargeDataProject_final.dll

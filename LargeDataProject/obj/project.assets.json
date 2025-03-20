@@ -2002,11 +2002,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\dev\\workspace\\LargeDataHandling\\LargeDataProject\\LargeDataProject.csproj",
+      "projectUniqueName": "C:\\dev\\workspace\\LargeDataMg\\LargeDataProject\\LargeDataProject.csproj",
       "projectName": "LargeDataProject",
-      "projectPath": "C:\\dev\\workspace\\LargeDataHandling\\LargeDataProject\\LargeDataProject.csproj",
+      "projectPath": "C:\\dev\\workspace\\LargeDataMg\\LargeDataProject\\LargeDataProject.csproj",
       "packagesPath": "C:\\Users\\Metanet\\.nuget\\packages\\",
-      "outputPath": "C:\\dev\\workspace\\LargeDataHandling\\LargeDataProject\\obj\\",
+      "outputPath": "C:\\dev\\workspace\\LargeDataMg\\LargeDataProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Metanet\\AppData\\Roaming\\NuGet\\NuGet.Config"

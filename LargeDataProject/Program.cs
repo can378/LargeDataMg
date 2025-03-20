@@ -15,6 +15,7 @@ builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 
+
 if (app.Environment.IsDevelopment())
 {
     // Swagger 사용
@@ -25,5 +26,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers(); // 컨트롤러 실행
+Console.WriteLine("Hello, World!");
 
 app.Run();
+
+
+
