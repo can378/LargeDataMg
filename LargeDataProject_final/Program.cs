@@ -1,28 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using MySql.Data.MySqlClient;
+using System.Text.Json;
 
 class Program
 {
     static void Main()
     {
-        string filePath = "20250313_대용량 데이터 전송 테스트.txt";
+        string connectionString = "Server=127.0.0.1;Port=3305;Database=test;User=test;Password=test;";
 
-        if (!File.Exists(filePath))
-        {
-            Console.WriteLine($"파일 없음: {filePath}");
-            return;
-        }
-
-        var stopwatch = Stopwatch.StartNew(); //시간 측정
+        var stopwatch = Stopwatch.StartNew();
+        var result = new List<Dictionary<string, object>>();
 
         try
         {
-            string content = File.ReadAllText(filePath); // 파일 내용 읽기
-            stopwatch.Stop(); //시간 측정 종료
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                var cmd = new MySqlCommand("SELECT * FROM LargeData", connection);
+                var reader = cmd.ExecuteReader();
 
-            Console.WriteLine(content);
-            Console.WriteLine($"소요 시간: {stopwatch.ElapsedMilliseconds} ms");
+                while (reader.Read())
+                {
+                    var row = new Dictionary<string, object>();
+
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                    }
+
+                    result.Add(row);
+                }
+            }
+
+            stopwatch.Stop();
+
+
+            string jsonData = JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonData);
+            Console.WriteLine($"데이터베이스 조회 시간: {stopwatch.ElapsedMilliseconds} ms");
         }
         catch (Exception ex)
         {
