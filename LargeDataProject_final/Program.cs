@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Amazon.Athena;
 using Amazon.Athena.Model;
+using System.Diagnostics;
 
 class Program
 {
@@ -20,6 +21,7 @@ class AthenaQueryExample
     public static async Task RunQuery()
     {
         var client = new AmazonAthenaClient();
+        var stopwatch = new Stopwatch(); //전체 시간측정
 
         var request = new StartQueryExecutionRequest
         {
@@ -30,6 +32,8 @@ class AthenaQueryExample
 
         var response = await client.StartQueryExecutionAsync(request);
         string queryExecutionId = response.QueryExecutionId;
+
+        var queryStopwatch = Stopwatch.StartNew();//쿼리 실행 시간 확인
 
         // 쿼리 상태 확인
         GetQueryExecutionResponse result;
@@ -45,6 +49,8 @@ class AthenaQueryExample
         if (result.QueryExecution.Status.State == "SUCCEEDED")
         {
             Console.WriteLine("쿼리 성공!!!!!!!!!");
+            Console.WriteLine($"쿼리 실행 시간: {queryStopwatch.ElapsedMilliseconds} ms");
+            var outputStopwatch = Stopwatch.StartNew();
 
             var resultsResponse = await client.GetQueryResultsAsync(new GetQueryResultsRequest
             {
@@ -59,10 +65,16 @@ class AthenaQueryExample
                 }
                 Console.WriteLine();
             }
+
+            outputStopwatch.Stop();
+            Console.WriteLine($"결과 출력 시간: {outputStopwatch.ElapsedMilliseconds} ms");
         }
         else
         {
             Console.WriteLine($"쿼리 실패... = {result.QueryExecution.Status.State} - {result.QueryExecution.Status.StateChangeReason}");
         }
+
+        stopwatch.Stop();
+        Console.WriteLine($"전체 실행 시간: {stopwatch.ElapsedMilliseconds} ms");//?????
     }
 }
