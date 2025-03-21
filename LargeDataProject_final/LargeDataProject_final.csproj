@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.Athena" Version="3.7.403.58" />
     <PackageReference Include="MySql.Data" Version="9.2.0" />
   </ItemGroup>
 

@@ -1,49 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using MySql.Data.MySqlClient;
-using System.Text.Json;
+using System.Threading.Tasks;
+using Amazon.Athena;
+using Amazon.Athena.Model;
 
 class Program
 {
-    static void Main()
+    static async Task Main(string[] args)
     {
-        string connectionString = "Server=127.0.0.1;Port=3305;Database=test;User=test;Password=test;";
+        await AthenaQueryExample.RunQuery();
+    }
+}
 
-        var stopwatch = Stopwatch.StartNew();
-        var result = new List<Dictionary<string, object>>();
+class AthenaQueryExample
+{
+    private static string database = "hugedatabase"; //Athena DB 이름
+    private static string outputS3 = "s3://hugehugebucket/athena-results/"; // 쿼리 결과 저장 위치. S3에 해당 폴더, 경로가 있는지 확인할 것것
+    private static string query = "SELECT * FROM large_data_table";//조회할 쿼리문
 
-        try
+    public static async Task RunQuery()
+    {
+        var client = new AmazonAthenaClient();
+
+        var request = new StartQueryExecutionRequest
         {
-            using (var connection = new MySqlConnection(connectionString))
+            QueryString = query,
+            QueryExecutionContext = new QueryExecutionContext { Database = database },
+            ResultConfiguration = new ResultConfiguration { OutputLocation = outputS3 }
+        };
+
+        var response = await client.StartQueryExecutionAsync(request);
+        string queryExecutionId = response.QueryExecutionId;
+
+        // 쿼리 상태 확인
+        GetQueryExecutionResponse result;
+        do
+        {
+            await Task.Delay(1000);
+            result = await client.GetQueryExecutionAsync(new GetQueryExecutionRequest
             {
-                connection.Open();
-                var cmd = new MySqlCommand("SELECT * FROM LargeData", connection);
-                var reader = cmd.ExecuteReader();
+                QueryExecutionId = queryExecutionId
+            });
+        } while (result.QueryExecution.Status.State == "RUNNING");
 
-                while (reader.Read())
-                {
-                    var row = new Dictionary<string, object>();
-
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
-                    }
-
-                    result.Add(row);
-                }
-            }
-
-            stopwatch.Stop();
-
-
-            string jsonData = JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
-            Console.WriteLine(jsonData);
-            Console.WriteLine($"데이터베이스 조회 시간: {stopwatch.ElapsedMilliseconds} ms");
-        }
-        catch (Exception ex)
+        if (result.QueryExecution.Status.State == "SUCCEEDED")
         {
-            Console.WriteLine($"오류: {ex.Message}");
+            Console.WriteLine("쿼리 성공!!!!!!!!!");
+
+            var resultsResponse = await client.GetQueryResultsAsync(new GetQueryResultsRequest
+            {
+                QueryExecutionId = queryExecutionId
+            });
+
+            foreach (var row in resultsResponse.ResultSet.Rows)
+            {
+                foreach (var data in row.Data)
+                {
+                    Console.Write($"{data.VarCharValue}\t");
+                }
+                Console.WriteLine();
+            }
+        }
+        else
+        {
+            Console.WriteLine($"쿼리 실패... = {result.QueryExecution.Status.State} - {result.QueryExecution.Status.StateChangeReason}");
         }
     }
 }
