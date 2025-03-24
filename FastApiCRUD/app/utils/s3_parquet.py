@@ -21,7 +21,7 @@ def get_parquet_df():
 
 def save_parquet_df(df):
     """Pandas DataFrame을 Parquet 파일로 변환 후 S3에 저장"""
-    # 🔥 seq 컬럼이 존재하면 int64로 변환 (float 저장 방지)
+    # seq 컬럼이 존재하면 int64로 변환 (float 저장 방지)
     if "seq" in df.columns:
         df["seq"] = pd.to_numeric(df["seq"], errors="coerce").fillna(0).astype("int64")
 

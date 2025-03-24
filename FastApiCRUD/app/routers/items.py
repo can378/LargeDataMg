@@ -3,17 +3,27 @@ from app.schemas.item import Item
 from app.crud.item import ItemCRUD
 from app.utils.s3_parquet import get_parquet_df, save_parquet_df
 import pandas as pd
+import time
 
 router = APIRouter(prefix="/items", tags=["items"])
 
 @router.get("/")
 def read_items():
-    """전체 데이터 조회 (Athena)"""
-    return ItemCRUD.get_all_items()
+    start = time.time()  #시작 시간
+    data = ItemCRUD.get_all_items()
+    duration = time.time() - start  #처리 시간
+
+    print(f"데이터 조회 시간: {duration:.3f}초")
+
+    return {
+        "duration": f"{duration:.3f}초",
+        "count": len(data),
+        "items": data
+    }
 
 @router.post("/")
 def create_item(item: Item):
-    """새로운 아이템 추가 (Athena `INSERT`)"""
+    """데이터터 추가 (Athena)"""
     return ItemCRUD.add_item(item)
 
 @router.put("/{seq}")
