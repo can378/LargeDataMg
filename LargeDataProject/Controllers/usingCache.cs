@@ -6,13 +6,13 @@ using System.IO;
 using System.Linq;
 
 [ApiController]
-[Route("api/cache2")]
-public class UsingCacheController2 : ControllerBase
+[Route("api/cache")]
+public class UsingCacheController : ControllerBase
 {
     private readonly IMemoryCache _cache;
     private readonly string _cacheKey = "CachedData";// 캐시 키
 
-    public UsingCacheController2(IMemoryCache cache)
+    public UsingCacheController(IMemoryCache cache)
     {
         _cache = cache;
     }
@@ -36,7 +36,7 @@ public class UsingCacheController2 : ControllerBase
         }
 
         stopwatch.Stop();// 시간 측정 종료
-        Console.WriteLine($"using cache2 - {stopwatch.ElapsedMilliseconds} ms");
+        Console.WriteLine($"using cache - {stopwatch.ElapsedMilliseconds} ms");
 
         return Ok(new { data = cachedData, timeTaken = stopwatch.ElapsedMilliseconds + " ms" });
     }
